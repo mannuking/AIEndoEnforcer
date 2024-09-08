@@ -2,7 +2,7 @@ import streamlit as st
 import os
 from video_processor import VideoProcessor
 import google.generativeai as genai
-from dotenv import load_dotenv
+
 
 # --- Page Configuration ---
 st.set_page_config(page_title="AIEndoEnforcer", page_icon=":muscle:")
