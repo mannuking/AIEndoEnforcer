@@ -11,9 +11,6 @@ import os
 import threading
 import random
 
-# Load environment variables
-load_dotenv()
-
 # Access the API key
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
