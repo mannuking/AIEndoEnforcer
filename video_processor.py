@@ -8,7 +8,6 @@ import pyttsx3
 import logging
 import google.generativeai as genai
 import os
-from dotenv import load_dotenv
 import threading
 import random
 
