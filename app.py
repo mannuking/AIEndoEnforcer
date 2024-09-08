@@ -22,8 +22,7 @@ if "chat_history" not in st.session_state:
 # --- Page Title ---
 st.title("AIEndoEnforcer")
 
-# --- Load environment variables (for Gemini API key)
-load_dotenv()
+
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
 # Configure Google Gemini
