@@ -51,8 +51,7 @@ class VideoProcessor:
             index += 1
         print("Available camera indices:", arr)
 
-        # Use the appropriate camera index based on the output of the above code
-        cap = cv2.VideoCapture(arr[0]) 
+        
         
         frame_width = int(cap.get(3))
         frame_height = int(cap.get(4))
