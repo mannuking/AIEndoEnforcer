@@ -37,7 +37,23 @@ class VideoProcessor:
         logging.info("VideoProcessor initialized.")
 
     def process_video(self):
-        cap = cv2.VideoCapture(0)
+
+        # Find available cameras
+        index = 0
+        arr = []
+        while True:
+            cap = cv2.VideoCapture(index)
+            if not cap.read()[0]:
+                break
+            else:
+                arr.append(index)
+            cap.release()
+            index += 1
+        print("Available camera indices:", arr)
+
+        # Use the appropriate camera index based on the output of the above code
+        cap = cv2.VideoCapture(arr[0]) 
+        
         frame_width = int(cap.get(3))
         frame_height = int(cap.get(4))
 
