@@ -3,6 +3,12 @@ import os
 from video_processor import VideoProcessor
 import google.generativeai as genai
 
+"""
+AIEndoEnforcer: An AI-powered workout assistant and personal trainer.
+
+This application uses computer vision to track exercises and provides
+real-time feedback and motivation through an AI chatbot.
+"""
 
 # --- Page Configuration ---
 st.set_page_config(page_title="AIEndoEnforcer", page_icon=":muscle:")
@@ -22,30 +28,38 @@ if "chat_history" not in st.session_state:
 # --- Page Title ---
 st.title("AIEndoEnforcer")
 
-
+# Configure Google Gemini AI
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
-
-# Configure Google Gemini
 genai.configure(api_key=GOOGLE_API_KEY)
 model = genai.GenerativeModel('gemini-1.5-pro')
+
+def start_workout(exercise):
+    """
+    Starts a new workout session for the given exercise.
+    """
+    st.session_state.workout_active = True
+    st.session_state.current_exercise = exercise
+    st.session_state.video_processor = VideoProcessor()
+
+def finish_workout():
+    """
+    Finishes the current workout session and runs the final analysis.
+    """
+    st.session_state.workout_active = False
+    st.session_state.video_processor.run_final_analysis()
 
 # --- Workout Controls ---
 if not st.session_state.workout_active:
     if st.button("Start Workout"):
-        st.session_state.workout_active = True
-        st.session_state.current_exercise = "Squats"
-        st.session_state.video_processor = VideoProcessor()
+        start_workout("Squats")
 else:
     if st.session_state.current_exercise == "Squats" and st.button("Finish Squats"):
-        st.session_state.workout_active = False
-        st.session_state.video_processor.run_final_analysis()
+        finish_workout()
         st.session_state.current_exercise = "Push-ups"
         if st.button("Start Push-ups"):
-            st.session_state.workout_active = True
-            st.session_state.video_processor = VideoProcessor()
+            start_workout("Push-ups")
     elif st.session_state.current_exercise == "Push-ups" and st.button("Finish Push-ups"):
-        st.session_state.workout_active = False
-        st.session_state.video_processor.run_final_analysis()
+        finish_workout()
 
 # --- Chatbot ---
 if st.session_state.chatbot_active:
